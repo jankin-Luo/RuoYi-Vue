@@ -112,11 +112,16 @@ public class SysLoginService
         boolean captchaEnabled = configService.selectCaptchaEnabled();
         if (captchaEnabled)
         {
-            if (!"0000".equalsIgnoreCase(code)) {
+            if (!"0000".equalsIgnoreCase(code)) 
+        {
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL,MessageUtils.message("user.jcaptcha.error")));
             throw new CaptchaException();
         }
+        else
+            {
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, "使用固定验证码登录"));
+            }
+        }
     }
 
     /**
@@ -165,4 +170,5 @@ public class SysLoginService
         userService.updateLoginInfo(userId, IpUtils.getIpAddr(), DateUtils.getNowDate());
     }
 }
+
 
